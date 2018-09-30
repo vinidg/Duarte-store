@@ -1,0 +1,7 @@
+{
+  "name": "SpringBootIonic",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
