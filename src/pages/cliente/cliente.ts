@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ClienteService } from '../../services/domain/cliente.service';
+import { ClienteDTO } from '../../model/cliente.dto';
 
 /**
  * Generated class for the ClientePage page.
@@ -15,11 +17,21 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ClientePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  items: ClienteDTO[];
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public clienteService: ClienteService) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ClientePage');
+    this.clienteService.findAll()
+    .subscribe(response => {
+      this.items = response;
+    },
+    error =>{
+      console.log(error);
+    });
   }
 
 }
