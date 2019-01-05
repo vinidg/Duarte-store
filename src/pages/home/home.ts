@@ -16,7 +16,7 @@ export class HomePage {
   ionViewWillEnter() {
     this.menu.swipeEnable(false);   
   } 
- 
+ //TODO feito
   ionViewDidLeave() {
     this.menu.swipeEnable(true);   
   } 
