@@ -22,6 +22,6 @@ export class HomePage {
   } 
 
   login(){
-    this.navCtrl.setRoot('ClientePage');
+    this.navCtrl.setRoot('CategoriasPage');
   }
 }
