@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { ClienteDTO } from "../../models/cliente.dto";
 import { Observable } from "rxjs/Rx";
 import { API_CONFIG } from "../../config/api.config";
@@ -21,7 +21,7 @@ export class ClienteService{
     }
     
   getImageFromBucket(id:string) : Observable<any> {
-    let url = 'http://naosei.com';
+    let url = 'https://images.unsplash.com/photo-1533736970669-7edc3f971be1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80';
     return this.http.get(url, {responseType:'blob'});
   }
 }

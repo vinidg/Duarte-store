@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StorageService } from '../../services/storage.service';
 import { ClienteDTO } from '../../models/cliente.dto';
 import { ClienteService } from '../../services/domain/cliente.service';
-import { _ParseAST } from '@angular/compiler';
 
 @IonicPage()
 @Component({
@@ -29,14 +28,20 @@ export class ProfilePage {
         this.cliente = res;
         this.getImageIfExists();
       },
-      error =>{});
+      error =>{
+        if(error.status == 403){
+          this.navCtrl.setRoot('HomePage');
+        }
+      });
+    }else{
+      this.navCtrl.setRoot('HomePage');
     }
   }
 
   getImageIfExists(){
     this.clienteService.getImageFromBucket(this.cliente.id)
     .subscribe(res=>{
-      this.cliente.imageUrl = `http://naosei.com`;
+      this.cliente.imageUrl = `https://images.unsplash.com/photo-1533736970669-7edc3f971be1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80`;
     },
     error=>{});
   }
