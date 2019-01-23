@@ -13,15 +13,15 @@ export class ClienteService{
     }
 
     findByUser(user: string) : Observable<ClienteDTO>{
-        let token = this.storage.getLocalUser().token;
-        let authHeader = new HttpHeaders({'Authorization':'Bearer '+token});
-
-
-        return this.http.get<ClienteDTO>(`${API_CONFIG.baseUrlBoot}/cliente/findbyuser?value=${user}`,
-        {'headers':authHeader});
+        return this.http.get<ClienteDTO>(`${API_CONFIG.baseUrlBoot}/cliente/findbyuser?value=${user}`);
     }
 
     findAll() : Observable<ClienteDTO[]>{
         return this.http.get<ClienteDTO[]>(`${API_CONFIG.baseUrl}/cliente/list`);
     }
+    
+  getImageFromBucket(id:string) : Observable<any> {
+    let url = 'http://naosei.com';
+    return this.http.get(url, {responseType:'blob'});
+  }
 }

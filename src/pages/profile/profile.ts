@@ -3,13 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StorageService } from '../../services/storage.service';
 import { ClienteDTO } from '../../models/cliente.dto';
 import { ClienteService } from '../../services/domain/cliente.service';
-
-/**
- * Generated class for the ProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { _ParseAST } from '@angular/compiler';
 
 @IonicPage()
 @Component({
@@ -33,9 +27,18 @@ export class ProfilePage {
       this.clienteService.findByUser(localUser.user)
       .subscribe(res => {
         this.cliente = res;
+        this.getImageIfExists();
       },
       error =>{});
     }
+  }
+
+  getImageIfExists(){
+    this.clienteService.getImageFromBucket(this.cliente.id)
+    .subscribe(res=>{
+      this.cliente.imageUrl = `http://naosei.com`;
+    },
+    error=>{});
   }
 
 }
