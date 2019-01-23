@@ -22,7 +22,8 @@ export class MyApp {
     this.pages = [
       { title: 'Profile', component: 'ProfilePage' },
       { title: 'Categorias', component: 'CategoriasPage' },
-      { title: 'Logout', component: '' }
+      { title: 'Criar perfil', component: 'SignupPage' },
+      { title: 'Logout', component: '' },
     ];
 
   }
