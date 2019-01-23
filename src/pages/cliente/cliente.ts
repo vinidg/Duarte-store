@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ClienteService } from '../../services/domain/cliente.service';
-import { ClienteDTO } from '../../model/cliente.dto';
+import { ClienteDTO } from '../../models/cliente.dto';
 
 /**
  * Generated class for the ClientePage page.
