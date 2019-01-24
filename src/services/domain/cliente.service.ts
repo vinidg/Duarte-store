@@ -24,4 +24,17 @@ export class ClienteService{
     let url = 'https://images.unsplash.com/photo-1533736970669-7edc3f971be1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80';
     return this.http.get(url, {responseType:'blob'});
   }
+
+
+  insert(obj : ClienteDTO){
+   return this.http.post(
+    `${API_CONFIG.baseUrlBoot}/cliente/add`,
+    obj,
+    {
+        observe: 'response',
+        responseType: 'text'
+    }
+   )
+  }
+
 }
