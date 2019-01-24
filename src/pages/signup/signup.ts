@@ -28,10 +28,9 @@ export class SignupPage {
       user: ['',[Validators.required, Validators.minLength(5)]],
       pass: ['',[Validators.required]],
       tipo: ['',[]],
-      cpf: ['',[]],
+      cpf: ['',[Validators.required]],
       estadoId: [null,[]],
       cidadeId: [null,[]],
-      email:['',[]]
 
     });
   }

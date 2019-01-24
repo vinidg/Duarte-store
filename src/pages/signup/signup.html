@@ -10,10 +10,13 @@
         <ion-label stacked>Nome*</ion-label>
         <ion-input formControlName="nome" type="text"></ion-input>
       </ion-item>
+      <p class="danger" *ngIf="formGroup.controls.nome.dirty && formGroup.controls.nome.errors" margin-left>Valor inválido</p>
       <ion-item>
-        <ion-label stacked>Email*</ion-label>
-        <ion-input formControlName="email" type="text"></ion-input>
+        <ion-label stacked>User*</ion-label>
+        <ion-input formControlName="user" type="text"></ion-input>
       </ion-item>
+      <p class="danger" *ngIf="formGroup.controls.user.dirty && formGroup.controls.user.errors" margin-left>Valor inválido</p>
+
       <ion-list radio-group formControlName="tipo">
         <ion-list-header>
           Tipo de cliente
@@ -27,15 +30,18 @@
           <ion-radio value="2"></ion-radio>
         </ion-item>
       </ion-list>
-  
       <ion-item>
-        <ion-label stacked>CPF ou CNPJ</ion-label>
+        <ion-label stacked>CPF</ion-label>
         <ion-input formControlName="cpf" type="text"></ion-input>
       </ion-item>
+      <p class="danger" *ngIf="formGroup.controls.cpf.dirty && formGroup.controls.cpf.errors" margin-left>Valor inválido</p>
+
       <ion-item>
         <ion-label stacked>Senha*</ion-label>
         <ion-input formControlName="pass" type="password"></ion-input>
       </ion-item> 
+      <p class="danger" *ngIf="formGroup.controls.pass.dirty && formGroup.controls.pass.errors" margin-left>Valor inválido</p>
+
       <ion-item>
         <ion-label stacked>Estado*</ion-label>
         <ion-select formControlName="estadoId" (ionChange)="updateCidades()">
@@ -48,6 +54,6 @@
             <ion-option *ngFor="let cidade of cidades" [value] = "cidade.id">{{cidade.nome}}</ion-option>
         </ion-select>
       </ion-item>
-      <button ion-button block type="submit">Criar conta</button>
+      <button ion-button block type="submit" [disabled]="formGroup.invalid">Criar conta</button>
     </form>
   </ion-content>
