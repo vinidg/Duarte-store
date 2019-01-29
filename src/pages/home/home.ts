@@ -12,8 +12,8 @@ import { AuthService } from '../../services/auth.service';
 export class HomePage {
   
 creds : CredenciaisDTO = {
-  user: "maria",
-  pass: "1234567"
+  user: "",
+  pass: ""
 };
 
   constructor(
@@ -41,12 +41,7 @@ creds : CredenciaisDTO = {
   }
 
   login(){
-    this.auth.authenticate(this.creds)
-    .subscribe(response =>{
-      this.auth.successfulLogin(response.headers.get('Authorization'));
-      this.navCtrl.setRoot('CategoriasPage');
-    },
-    error=>{});
+    this.navCtrl.setRoot('CategoriasPage');
   }
 
   signup(){

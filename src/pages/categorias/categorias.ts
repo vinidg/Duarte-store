@@ -26,13 +26,37 @@ export class CategoriasPage {
   }
 
   ionViewDidLoad() {
-    this.categoriaService.findAll()
-    .subscribe(response => {
-      this.items = response;
-    },
-    error => {});
-
-  }
+    this.items = [
+        {
+            id: "1",
+            nome: "Informática"
+        },
+        {
+            id: "2",
+            nome: "Escritório"
+        },
+        {
+            id: "3",
+            nome: "Cama mesa e banho"
+        },
+        {
+            id: "4",
+            nome: "Eletrônicos"
+        },
+        {
+            id: "5",
+            nome: "Jardinagem"
+        },
+        {
+            id: "6",
+            nome: "Decoração"
+        },
+        {
+            id: "7",
+            nome: "Perfumaria"
+        }
+    ]
+  };
 
   showProdutos(){
     this.navCtrl.push('ProdutosPage');

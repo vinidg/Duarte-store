@@ -46,6 +46,17 @@ export class SignupPage {
         this.updateCidades();
       },
       error=>{});
+
+      this.estados = [
+        {
+          id: "1",
+          nome: "Minas Gerais"
+      },
+      {
+          id: "2",
+          nome: "São Paulo"
+      }
+      ]
   }
   updateCidades(){
     let estado_id = this.formGroup.value.estadoId;
@@ -55,6 +66,16 @@ export class SignupPage {
         this.formGroup.controls.cidadeId.setValue(null);
       },
       error=>{});
+      this.cidades = [
+        {
+          id: "3",
+          nome: "Campinas"
+      },
+      {
+          id: "2",
+          nome: "São Paulo"
+      }
+    ]
   }
   signupUser(){
     this.clienteService.insert(this.formGroup.value)
