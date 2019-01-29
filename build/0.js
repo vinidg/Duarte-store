@@ -175,6 +175,16 @@ var SignupPage = /** @class */ (function () {
             _this.formGroup.controls.estadoId.setValue(_this.estados[0].id);
             _this.updateCidades();
         }, function (error) { });
+        this.estados = [
+            {
+                id: "1",
+                nome: "Minas Gerais"
+            },
+            {
+                id: "2",
+                nome: "São Paulo"
+            }
+        ];
     };
     SignupPage.prototype.updateCidades = function () {
         var _this = this;
@@ -184,6 +194,16 @@ var SignupPage = /** @class */ (function () {
             _this.cidades = res;
             _this.formGroup.controls.cidadeId.setValue(null);
         }, function (error) { });
+        this.cidades = [
+            {
+                id: "3",
+                nome: "Campinas"
+            },
+            {
+                id: "2",
+                nome: "São Paulo"
+            }
+        ];
     };
     SignupPage.prototype.signupUser = function () {
         var _this = this;
@@ -211,7 +231,7 @@ var SignupPage = /** @class */ (function () {
     };
     SignupPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'page-signup',template:/*ion-inline-start:"C:\Users\vduarteg\Documents\Meus-projetos\spring-boot-ionic\src\pages\signup\signup.html"*/'<ion-header>\n    <ion-navbar>\n      <ion-title>Signup</ion-title>\n    </ion-navbar>\n  </ion-header>\n  \n  <ion-content padding>\n    <form [formGroup]="formGroup" (ngSubmit)="signupUser(); $event.preventDefault()">\n      <ion-item>\n        <ion-label stacked>Nome*</ion-label>\n        <ion-input formControlName="nome" type="text"></ion-input>\n      </ion-item>\n      <p class="danger" *ngIf="formGroup.controls.nome.dirty && formGroup.controls.nome.errors" margin-left>Valor inválido</p>\n      <ion-item>\n        <ion-label stacked>User*</ion-label>\n        <ion-input formControlName="user" type="text"></ion-input>\n      </ion-item>\n      <p class="danger" *ngIf="formGroup.controls.user.dirty && formGroup.controls.user.errors" margin-left>Valor inválido</p>\n\n      <ion-list radio-group formControlName="tipo">\n        <ion-list-header>\n          Tipo de cliente\n        </ion-list-header>\n        <ion-item>\n          <ion-label>Pessoa física</ion-label>\n          <ion-radio checked="true" value="1"></ion-radio>\n        </ion-item>\n        <ion-item>\n          <ion-label>Pessoa jurídica</ion-label>\n          <ion-radio value="2"></ion-radio>\n        </ion-item>\n      </ion-list>\n      <ion-item>\n        <ion-label stacked>CPF</ion-label>\n        <ion-input formControlName="cpf" type="text"></ion-input>\n      </ion-item>\n      <p class="danger" *ngIf="formGroup.controls.cpf.dirty && formGroup.controls.cpf.errors" margin-left>Valor inválido</p>\n\n      <ion-item>\n        <ion-label stacked>Senha*</ion-label>\n        <ion-input formControlName="pass" type="password"></ion-input>\n      </ion-item> \n      <p class="danger" *ngIf="formGroup.controls.pass.dirty && formGroup.controls.pass.errors" margin-left>Valor inválido</p>\n\n      <ion-item>\n        <ion-label stacked>Estado*</ion-label>\n        <ion-select formControlName="estadoId" (ionChange)="updateCidades()">\n          <ion-option *ngFor="let estado of estados; first as f " [value] = "estado.id" [selected]="f">{{estado.nome}}</ion-option>\n        </ion-select>\n      </ion-item>\n      <ion-item>\n        <ion-label stacked>Cidade*</ion-label>\n        <ion-select formControlName="cidadeId">\n            <ion-option *ngFor="let cidade of cidades" [value] = "cidade.id">{{cidade.nome}}</ion-option>\n        </ion-select>\n      </ion-item>\n      <button ion-button block type="submit" [disabled]="formGroup.invalid">Criar conta</button>\n    </form>\n  </ion-content>'/*ion-inline-end:"C:\Users\vduarteg\Documents\Meus-projetos\spring-boot-ionic\src\pages\signup\signup.html"*/,
+            selector: 'page-signup',template:/*ion-inline-start:"C:\Users\vduarteg\Documents\Meus-projetos\spring-boot-ionic\src\pages\signup\signup.html"*/'<ion-header>\n\n    <ion-navbar>\n\n      <ion-title>Signup</ion-title>\n\n    </ion-navbar>\n\n  </ion-header>\n\n  \n\n  <ion-content padding>\n\n    <form [formGroup]="formGroup" (ngSubmit)="signupUser(); $event.preventDefault()">\n\n      <ion-item>\n\n        <ion-label stacked>Nome*</ion-label>\n\n        <ion-input formControlName="nome" type="text"></ion-input>\n\n      </ion-item>\n\n      <p class="danger" *ngIf="formGroup.controls.nome.dirty && formGroup.controls.nome.errors" margin-left>Valor inválido</p>\n\n      <ion-item>\n\n        <ion-label stacked>User*</ion-label>\n\n        <ion-input formControlName="user" type="text"></ion-input>\n\n      </ion-item>\n\n      <p class="danger" *ngIf="formGroup.controls.user.dirty && formGroup.controls.user.errors" margin-left>Valor inválido</p>\n\n\n\n      <ion-list radio-group formControlName="tipo">\n\n        <ion-list-header>\n\n          Tipo de cliente\n\n        </ion-list-header>\n\n        <ion-item>\n\n          <ion-label>Pessoa física</ion-label>\n\n          <ion-radio checked="true" value="1"></ion-radio>\n\n        </ion-item>\n\n        <ion-item>\n\n          <ion-label>Pessoa jurídica</ion-label>\n\n          <ion-radio value="2"></ion-radio>\n\n        </ion-item>\n\n      </ion-list>\n\n      <ion-item>\n\n        <ion-label stacked>CPF</ion-label>\n\n        <ion-input formControlName="cpf" type="text"></ion-input>\n\n      </ion-item>\n\n      <p class="danger" *ngIf="formGroup.controls.cpf.dirty && formGroup.controls.cpf.errors" margin-left>Valor inválido</p>\n\n\n\n      <ion-item>\n\n        <ion-label stacked>Senha*</ion-label>\n\n        <ion-input formControlName="pass" type="password"></ion-input>\n\n      </ion-item> \n\n      <p class="danger" *ngIf="formGroup.controls.pass.dirty && formGroup.controls.pass.errors" margin-left>Valor inválido</p>\n\n\n\n      <ion-item>\n\n        <ion-label stacked>Estado*</ion-label>\n\n        <ion-select formControlName="estadoId" (ionChange)="updateCidades()">\n\n          <ion-option *ngFor="let estado of estados; first as f " [value] = "estado.id" [selected]="f">{{estado.nome}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <ion-item>\n\n        <ion-label stacked>Cidade*</ion-label>\n\n        <ion-select formControlName="cidadeId">\n\n            <ion-option *ngFor="let cidade of cidades" [value] = "cidade.id">{{cidade.nome}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <button ion-button block type="submit" [disabled]="formGroup.invalid">Criar conta</button>\n\n    </form>\n\n  </ion-content>'/*ion-inline-end:"C:\Users\vduarteg\Documents\Meus-projetos\spring-boot-ionic\src\pages\signup\signup.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],

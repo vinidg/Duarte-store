@@ -71,12 +71,38 @@ var CategoriasPage = /** @class */ (function () {
         this.categoriaService = categoriaService;
     }
     CategoriasPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        this.categoriaService.findAll()
-            .subscribe(function (response) {
-            _this.items = response;
-        }, function (error) { });
+        this.items = [
+            {
+                id: "1",
+                nome: "Informática"
+            },
+            {
+                id: "2",
+                nome: "Escritório"
+            },
+            {
+                id: "3",
+                nome: "Cama mesa e banho"
+            },
+            {
+                id: "4",
+                nome: "Eletrônicos"
+            },
+            {
+                id: "5",
+                nome: "Jardinagem"
+            },
+            {
+                id: "6",
+                nome: "Decoração"
+            },
+            {
+                id: "7",
+                nome: "Perfumaria"
+            }
+        ];
     };
+    ;
     CategoriasPage.prototype.showProdutos = function () {
         this.navCtrl.push('ProdutosPage');
     };

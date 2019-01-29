@@ -1,6 +1,6 @@
 webpackJsonp([3],{
 
-/***/ 683:
+/***/ 682:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomeModule", function() { return HomeModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ionic_angular_module__ = __webpack_require__(350);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home__ = __webpack_require__(691);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home__ = __webpack_require__(690);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -34,7 +34,7 @@ var HomeModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 691:
+/***/ 690:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62,8 +62,8 @@ var HomePage = /** @class */ (function () {
         this.menu = menu;
         this.auth = auth;
         this.creds = {
-            user: "maria",
-            pass: "1234567"
+            user: "",
+            pass: ""
         };
     }
     HomePage.prototype.ionViewWillEnter = function () {
@@ -81,12 +81,7 @@ var HomePage = /** @class */ (function () {
         }, function (error) { });
     };
     HomePage.prototype.login = function () {
-        var _this = this;
-        this.auth.authenticate(this.creds)
-            .subscribe(function (response) {
-            _this.auth.successfulLogin(response.headers.get('Authorization'));
-            _this.navCtrl.setRoot('CategoriasPage');
-        }, function (error) { });
+        this.navCtrl.setRoot('CategoriasPage');
     };
     HomePage.prototype.signup = function () {
         this.navCtrl.push('SignupPage');
