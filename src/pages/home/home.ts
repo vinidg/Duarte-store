@@ -4,25 +4,23 @@ import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
 import { AuthService } from '../../services/auth.service';
 
-
 @IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+  
 creds : CredenciaisDTO = {
-  user: "",
-  pass: ""
+  user: "maria",
+  pass: "1234567"
 };
 
   constructor(
     public navCtrl: NavController, 
     public menu: MenuController,
-    public auth: AuthService
+    public auth: AuthService,
     ) {
-
   }
 
   ionViewWillEnter() {
