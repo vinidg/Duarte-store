@@ -5,7 +5,7 @@ import {
 
 import { Observable } from 'rxjs/Rx';
 import { StorageService } from '../services/storage.service';
-import { API_CONFIG } from '../config/api.config';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -17,8 +17,8 @@ export class AuthInterceptor implements HttpInterceptor {
     
     let localUser = this.storage.getLocalUser();
 
-    let N = API_CONFIG.baseUrlBoot.length;
-    let requestToApi = req.url.substring(0,N) == API_CONFIG.baseUrlBoot;
+    let N = environment.BASE_URL.length;
+    let requestToApi = req.url.substring(0,N) == environment.BASE_URL;
 
     if(localUser && requestToApi){
         const authReq = req.clone({headers: req.headers.set('Authorization','Bearer '+localUser.token)});

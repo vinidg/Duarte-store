@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { API_CONFIG } from "../../config/api.config";
 import { CidadeDTO } from "../../models/cidade.dto";
 import { Observable } from "rxjs/Rx";
+import { environment } from "../../environments/environment";
 
 @Injectable()
 export class CidadeService {
@@ -11,6 +11,6 @@ export class CidadeService {
     }
     
     findAll(estado_id : string) : Observable<CidadeDTO[]> {
-        return this.http.get<CidadeDTO[]>(`${API_CONFIG.baseUrlBoot}/estados/${estado_id}/cidades`);
+        return this.http.get<CidadeDTO[]>(`${environment.BASE_URL}/estados/${estado_id}/cidades`);
     }
 }

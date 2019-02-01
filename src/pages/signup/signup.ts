@@ -58,10 +58,10 @@ export class SignupPage {
   }
   signupUser(){
     this.clienteService.insert(this.formGroup.value)
-      .subscribe(res =>{
-        this.showInsertOK();
-      },
-      error=>{});
+      .subscribe(res =>
+        this.showInsertOK()
+        ,error =>{}
+        );
   }
 
   showInsertOK(){

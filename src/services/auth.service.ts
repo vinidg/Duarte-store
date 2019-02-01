@@ -4,7 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { LocalUser } from "../models/local_user";
 import { StorageService } from "./storage.service";
 import { JwtHelper } from "angular2-jwt";
-import { API_CONFIG } from "../config/api.config";
+import { environment } from "../environments/environment";
 
 @Injectable()
 export class AuthService{
@@ -15,7 +15,7 @@ export class AuthService{
     }
     authenticate(creds: CredenciaisDTO){
         return this.http.post(
-        `${API_CONFIG.baseUrlBoot}/login`,
+        `${environment.BASE_URL}/login`,
         creds,
         {
             observe:'response',
@@ -25,7 +25,7 @@ export class AuthService{
 
     refreshToken(){
         return this.http.post(
-        `${API_CONFIG.baseUrlBoot}/auth/refresh_token`,
+        `${environment.BASE_URL}/auth/refresh_token`,
         {},
         {
             observe:'response',

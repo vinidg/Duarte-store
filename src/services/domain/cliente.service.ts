@@ -2,8 +2,8 @@ import {Injectable} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { ClienteDTO } from "../../models/cliente.dto";
 import { Observable } from "rxjs/Rx";
-import { API_CONFIG } from "../../config/api.config";
 import { StorageService } from "../storage.service";
+import { environment } from "../../environments/environment";
 
 @Injectable()
 export class ClienteService{
@@ -13,11 +13,11 @@ export class ClienteService{
     }
 
     findByUser(user: string) : Observable<ClienteDTO>{
-        return this.http.get<ClienteDTO>(`${API_CONFIG.baseUrlBoot}/cliente/findbyuser?value=${user}`);
+        return this.http.get<ClienteDTO>(`${environment.BASE_URL}/cliente/findbyuser?value=${user}`);
     }
 
     findAll() : Observable<ClienteDTO[]>{
-        return this.http.get<ClienteDTO[]>(`${API_CONFIG.baseUrl}/cliente/list`);
+        return this.http.get<ClienteDTO[]>(`${environment.BASE_URL}/cliente/list`);
     }
     
   getImageFromBucket(id:string) : Observable<any> {
@@ -28,7 +28,7 @@ export class ClienteService{
 
   insert(obj : ClienteDTO){
    return this.http.post(
-    `${API_CONFIG.baseUrlBoot}/cliente/add`,
+    `${environment.BASE_URL}/cliente/add`,
     obj,
     {
         observe: 'response',
