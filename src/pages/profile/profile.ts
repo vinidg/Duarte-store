@@ -4,7 +4,7 @@ import { StorageService } from '../../services/storage.service';
 import { ClienteDTO } from '../../models/cliente.dto';
 import { ClienteService } from '../../services/domain/cliente.service';
 
-@IonicPage()
+@IonicPage({segment: `profile?esc_pagename=profile`})
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',

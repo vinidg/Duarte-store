@@ -4,7 +4,7 @@ import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
 import { AuthService } from '../../services/auth.service';
 
-@IonicPage()
+@IonicPage({segment: `home?esc_pagename=home`})
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'

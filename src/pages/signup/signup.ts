@@ -7,7 +7,7 @@ import { EstadoDTO } from '../../models/estado.dto';
 import { CidadeDTO } from '../../models/cidade.dto';
 import { ClienteService } from '../../services/domain/cliente.service';
 
-@IonicPage()
+@IonicPage({segment: `signup?esc_pagename=signup`})
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html',
