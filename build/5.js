@@ -58,12 +58,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-/**
- * Generated class for the CategoriasPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 var CategoriasPage = /** @class */ (function () {
     function CategoriasPage(navCtrl, navParams, categoriaService) {
         this.navCtrl = navCtrl;
