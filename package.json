@@ -12,7 +12,10 @@
     "ionic:watch:before": "node ./src/script.js",
     "ionic:build:before": "node ./src/script.js",
     "prestart-dev": "./src/bash-dev.sh",
-    "start-dev": "ionic serve"
+    "start-dev": "ionic serve",
+    "prestart-prd": "./src/bash-prd.sh",
+    "start-prd": "ionic serve",
+    "ionic-prod": "./src/run-all-devices.sh prod"
   },
   "dependencies": {
     "@angular/animations": "5.2.11",
@@ -26,6 +29,9 @@
     "@angular/platform-browser-dynamic": "5.2.11",
     "@ionic-native/camera": "^5.0.0",
     "@ionic-native/core": "~4.12.0",
+    "@ionic-native/document-viewer": "^4.20.0",
+    "@ionic-native/file": "^4.20.0",
+    "@ionic-native/file-transfer": "^4.20.0",
     "@ionic-native/splash-screen": "~4.12.0",
     "@ionic-native/status-bar": "~4.12.0",
     "@ionic/storage": "2.2.0",
@@ -34,6 +40,9 @@
     "cordova-browser": "5.0.4",
     "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-document-viewer": "0.9.10",
+    "cordova-plugin-file": "6.0.1",
+    "cordova-plugin-file-transfer": "1.7.1",
     "cordova-plugin-ionic-keyboard": "^2.1.3",
     "cordova-plugin-ionic-webview": "^2.3.2",
     "cordova-plugin-splashscreen": "^5.0.2",
@@ -59,7 +68,10 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-camera": {}
+      "cordova-plugin-camera": {},
+      "cordova-plugin-document-viewer": {},
+      "cordova-plugin-file-transfer": {},
+      "cordova-plugin-file": {}
     },
     "platforms": [
       "browser",
