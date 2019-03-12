@@ -3,8 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StorageService } from '../../services/storage.service';
 import { ClienteDTO } from '../../models/cliente.dto';
 import { ClienteService } from '../../services/domain/cliente.service';
+import { Tela } from '../../services/Tela';
 
-@IonicPage({segment: `profile?esc_pagename=profile`})
+@IonicPage()
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',
@@ -18,6 +19,7 @@ export class ProfilePage {
     public navParams: NavParams,
     public storage: StorageService,
     public clienteService: ClienteService) {
+      Tela.passou("ClientePage");
   }
 
   ionViewDidLoad() {

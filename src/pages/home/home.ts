@@ -3,8 +3,9 @@ import { NavController, IonicPage } from 'ionic-angular';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
 import { AuthService } from '../../services/auth.service';
+import { Tela } from '../../services/Tela';
 
-@IonicPage({segment: `home?esc_pagename=home`})
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -21,6 +22,7 @@ creds : CredenciaisDTO = {
     public menu: MenuController,
     public auth: AuthService,
     ) {
+      Tela.passou("HomePage");
   }
 
   ionViewWillEnter() {

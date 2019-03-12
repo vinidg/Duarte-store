@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ClienteService } from '../../services/domain/cliente.service';
 import { ClienteDTO } from '../../models/cliente.dto';
+import { Tela } from '../../services/Tela';
 
 @IonicPage()
 @Component({
@@ -15,6 +16,7 @@ export class ClientePage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     public clienteService: ClienteService) {
+      Tela.passou("ClientePage");
   }
 
   ionViewDidLoad() {

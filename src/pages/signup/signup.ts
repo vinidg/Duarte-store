@@ -6,8 +6,9 @@ import { EstadoService } from '../../services/domain/estado.service';
 import { EstadoDTO } from '../../models/estado.dto';
 import { CidadeDTO } from '../../models/cidade.dto';
 import { ClienteService } from '../../services/domain/cliente.service';
+import { Tela } from '../../services/Tela';
 
-@IonicPage({segment: `signup?esc_pagename=signup`})
+@IonicPage()
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html',
@@ -34,8 +35,8 @@ export class SignupPage {
       cpf: ['',[Validators.required]],
       estadoId: [null,[]],
       cidadeId: [null,[]],
-
     });
+    Tela.passou("ClientePage");
   }
 
   ionViewDidLoad(){
