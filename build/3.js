@@ -1,6 +1,6 @@
 webpackJsonp([3],{
 
-/***/ 683:
+/***/ 682:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34,6 +34,24 @@ var HomeModule = /** @class */ (function () {
 
 /***/ }),
 
+/***/ 687:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Tela; });
+var Tela = /** @class */ (function () {
+    function Tela() {
+    }
+    Tela.passou = function (nomeTela) {
+        console.log(nomeTela);
+    };
+    return Tela;
+}());
+
+//# sourceMappingURL=Tela.js.map
+
+/***/ }),
+
 /***/ 691:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -43,6 +61,7 @@ var HomeModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular_components_app_menu_controller__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_auth_service__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_Tela__ = __webpack_require__(687);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -56,6 +75,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var HomePage = /** @class */ (function () {
     function HomePage(navCtrl, menu, auth) {
         this.navCtrl = navCtrl;
@@ -65,6 +85,7 @@ var HomePage = /** @class */ (function () {
             user: "",
             pass: ""
         };
+        __WEBPACK_IMPORTED_MODULE_4__services_Tela__["a" /* Tela */].passou("HomePage");
     }
     HomePage.prototype.ionViewWillEnter = function () {
         this.menu.swipeEnable(false);
