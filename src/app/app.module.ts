@@ -13,9 +13,8 @@ import { AuthService } from '../services/auth.service';
 import { StorageService } from '../services/storage.service';
 import { ClienteService } from '../services/domain/cliente.service';
 import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
-import { DocumentViewer } from '@ionic-native/document-viewer';
-import { FileTransfer } from '@ionic-native/file-transfer';
-import { File } from '@ionic-native/file';
+import { ProdutoService } from '../services/domain/produto.service';
+import { ImageUtilService } from '../services/image-util.service';
 
 @NgModule({
   declarations: [
@@ -40,9 +39,8 @@ import { File } from '@ionic-native/file';
     AuthService,
     StorageService,
     ClienteService,
-    DocumentViewer,
-    FileTransfer,
-    File
+    ProdutoService,
+    ImageUtilService
   ]
 })
 export class AppModule {}

@@ -9,13 +9,10 @@
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
+    "ionic:serve": "ionic-app-scripts serve",
+    "ionic:serve:before": "node ./src/script.js",
     "ionic:watch:before": "node ./src/script.js",
-    "ionic:build:before": "node ./src/script.js",
-    "prestart-dev": "./src/bash-dev.sh",
-    "start-dev": "ionic serve",
-    "prestart-prd": "./src/bash-prd.sh",
-    "start-prd": "ionic serve",
-    "ionic-prod": "./src/run-all-devices.sh prod"
+    "ionic:build:before": "node ./src/script.js"
   },
   "dependencies": {
     "@angular/animations": "5.2.11",
@@ -55,7 +52,7 @@
     "zone.js": "0.8.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^3.2.1",
+    "@ionic/app-scripts": "^3.2.4",
     "cross-env": "^5.2.0",
     "typescript": "~2.6.2"
   },

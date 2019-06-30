@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ProdutoDTO } from '../../models/produto.dto';
+import { ProdutoService } from '../../services/domain/produto.service';
+import { API_CONFIG } from '../../config/api.config';
 
 @IonicPage()
 @Component({
@@ -9,25 +11,54 @@ import { ProdutoDTO } from '../../models/produto.dto';
 })
 export class ProdutosPage {
 
-  items : ProdutoDTO[];
+  items : ProdutoDTO[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public produtosService: ProdutoService,
+    public loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
-    this.items =[
-      {
-        id: "1",
-        nome: "Mouse",
-        preco: 90.00
+    this.loadData()
+  }
+  
+  loadData() {
+    let loader = this.presentLoading()
+
+    this.produtosService.findAll()
+      .subscribe(res => {
+        this.items = this.items.concat(res)
+        loader.dismiss()
+        this.loadImagesUrls()
       },
-      {
-        id: "2",
-        nome: "Teclado",
-        preco: 120.00
-      }
-    ]
-  };
+      error => {
+        loader.dismiss()
+      })
+  }
 
+  loadImagesUrls() {
+    for(let item of this.items){ 
+      this.produtosService.getSmallImageFromBucket(item.id)
+        .subscribe(res => {
+          item.imageUrl = `${API_CONFIG.bucketBaseUrl}/produtos/pr${item.id}-small.jpg`
+        },
+        error => {
+          item.imageUrl = 'assets/imgs/prod.jpg'
+        })
+    }
+  }
 
+  presentLoading() {
+    let loader = this.loadingCtrl.create({
+      content: "Aguarde..."
+    });
+    loader.present();
+    return loader;
+  }
+
+  showDetail(produto_id : string) {
+    this.navCtrl.push('ProdutosDetalhesPage', {produto_id: produto_id});
+  }
+  
 }

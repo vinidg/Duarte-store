@@ -11,6 +11,7 @@ import { ClienteDTO } from '../../models/cliente.dto';
 export class ClientePage {
 
   items: ClienteDTO[];
+
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
