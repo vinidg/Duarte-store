@@ -16,11 +16,11 @@ export class ClienteService{
     }
 
     findByUser(user: string) : Observable<ClienteDTO>{
-        return this.http.get<ClienteDTO>(`${environment.BASE_URL}/cliente/findbyuser?value=${user}`);
+        return this.http.get<ClienteDTO>(`${environment.BASE_URL}/clientes/findbyuser?value=${user}`);
     }
 
     findAll() : Observable<ClienteDTO[]>{
-        return this.http.get<ClienteDTO[]>(`${environment.BASE_URL}/cliente/list`);
+        return this.http.get<ClienteDTO[]>(`${environment.BASE_URL}/clientes/list`);
     }
     
   getImageFromBucket(id:string) : Observable<any> {
@@ -31,7 +31,7 @@ export class ClienteService{
 
   insert(obj : ClienteDTO){
    return this.http.post(
-    `${environment.BASE_URL}/cliente/add`,
+    `${environment.BASE_URL}/clientes/add`,
     obj,
     {
         observe: 'response',

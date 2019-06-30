@@ -12,8 +12,8 @@ import { AuthService } from '../../services/auth.service';
 export class HomePage {
   
 creds : CredenciaisDTO = {
-  user: "maria",
-  pass: "1234567"
+  user: "",
+  pass: ""
 };
 
   constructor(
