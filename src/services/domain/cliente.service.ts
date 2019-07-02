@@ -43,7 +43,7 @@ export class ClienteService{
   uploadPicture(picture) {
     let pictureBlob = this.imageUtilService.dataUriToBlob(picture);
     let formData : FormData = new FormData();
-    formData.set('file', pictureBlob, 'file.png');
+    formData.set('file', pictureBlob, 'file.jpg');
     return this.http.post(
         `${environment.BASE_URL}/clientes/picture`, 
         formData,

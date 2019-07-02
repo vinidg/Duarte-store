@@ -1,5 +1,11 @@
 // http://ionicframework.com/docs/theming/
 
+ion-content{
+    background: map-get($colors, background)!important;
+  }
+  
+//arrumar bounce ios
+  .content-ios:not([no-bounce])>.scroll-content::before { bottom: 0; };
 
 // App Global Sass
 // --------------------------------------------------

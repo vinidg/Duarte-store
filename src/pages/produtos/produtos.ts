@@ -29,8 +29,8 @@ export class ProdutosPage {
     this.produtosService.findAll()
       .subscribe(res => {
         this.items = this.items.concat(res)
-        loader.dismiss()
         this.loadImagesUrls()
+        loader.dismiss()
       },
       error => {
         loader.dismiss()
@@ -59,6 +59,14 @@ export class ProdutosPage {
 
   showDetail(produto_id : string) {
     this.navCtrl.push('ProdutosDetalhesPage', {produto_id: produto_id});
+  }
+
+  doRefresh(refresher) {
+    this.items = [];
+    this.loadData();
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
   }
   
 }

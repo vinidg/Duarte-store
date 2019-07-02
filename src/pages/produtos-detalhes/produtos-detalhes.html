@@ -3,20 +3,23 @@
     <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>ProdutoDetail</ion-title>
+    <ion-title>Produto Detalhes</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-fab top right edge>
-    <button navPush="CartPage" ion-fab mini><ion-icon name="cart"></ion-icon></button>
+    <button navPush="CarrinhoPage" ion-fab mini><ion-icon name="cart"></ion-icon></button>
   </ion-fab>
   <ion-card>
-    <img [src]="item?.imageUrl || 'assets/imgs/prod.jpg'"/>
+    <img *ngIf="!picture" [src]="pictureProduto"/>
+    <ion-item *ngIf="picture">
+      <img [src]="picture">
+    </ion-item>
     <ion-card-content>
       <ion-card-title>
         {{item?.nome}}
-        </ion-card-title>
+      </ion-card-title>
       <p>
         {{item?.preco | currency}}
       </p>
@@ -25,6 +28,20 @@
       </p>
     </ion-card-content>
   </ion-card>
-
-  <button ion-button block outline (click)="addToCart(item)">Adicionar ao carrinho</button>
+  
+  <button ion-button block (click)="addToCart(item)">Adicionar ao carrinho</button>
+  <ion-card *ngIf="picture">
+    <ion-card-content>
+      <button ion-button large outline block color="secondary" (click)="sendPicture()">Enviar imagem</button>
+      <button ion-button large outline block color="danger" (click)="cancel()">Descartar imagem</button>
+    </ion-card-content>
+  </ion-card>
+  <ion-fab bottom right *ngIf="admin || cameraOn">
+    <button ion-fab>Editar</button>
+    <ion-fab-list side="left">
+      <button ion-fab (click)="getCameraPicture()"><ion-icon name="camera"></ion-icon></button>
+      <button ion-fab (click)="getGalleryPicture()"><ion-icon name="albums"></ion-icon></button>
+      <button ion-fab><ion-icon name="information-circle"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>

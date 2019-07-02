@@ -1,11 +1,11 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from "ionic-angular";
 import { StorageService } from "../../services/storage.service";
 import { ClienteDTO } from "../../models/cliente.dto";
 import { ClienteService } from "../../services/domain/cliente.service";
-import { CameraOptions, Camera } from "@ionic-native/camera/ngx";
 import { API_CONFIG } from "../../config/api.config";
 import { DomSanitizer } from "@angular/platform-browser";
+import { Camera, CameraOptions } from "@ionic-native/camera";
 
 @IonicPage()
 @Component({
@@ -24,35 +24,59 @@ export class ProfilePage {
     public storage: StorageService,
     public clienteService: ClienteService,
     public camera: Camera,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController
   ) {
-    this.profileImage = 'assets/imgs/avatar-blank.png';
+    this.profileImage = 'assets/imgs/blank-avatar.png';
   }
 
   ionViewDidLoad() {
     this.loadData()
   }
 
+  presentLoading() {
+    let loader = this.loadingCtrl.create({
+      content: "Aguarde..."
+    });
+    loader.present();
+    return loader;
+  }
+
+  showAlert() {
+    const alert = this.alertCtrl.create({
+      title: 'Imagem Salva',
+      subTitle: 'Sua imagem foi alterada com sucesso !',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
   loadData(){
+    let loader = this.presentLoading()
     let localUser = this.storage.getLocalUser();
     if (localUser && localUser.user) {
       this.clienteService.findByUser(localUser.user).subscribe(
         res => {
           this.cliente = res as ClienteDTO
+          this.getImageIfExists()
+          loader.dismiss()
         },
         error => {
+          loader.dismiss()
           if (error.status == 403) {
             this.navCtrl.setRoot("HomePage");
           }
         }
-      );
-    } else {
-      this.navCtrl.setRoot("HomePage");
+        );
+      } else {
+        loader.dismiss()
+        this.navCtrl.setRoot("HomePage");
     }
   }
 
-  getImageIfExists(){
-    this.clienteService.getImageFromBucket(this.cliente.id)
+  async getImageIfExists(){
+    await this.clienteService.getImageFromBucket(this.cliente.id)
         .subscribe(res => {
           this.cliente.imageUrl = `${API_CONFIG.bucketBaseUrl}/clientes/cp${this.cliente.id}.jpg`
           this.blobToDataURL(res).then(dataUrl => {
@@ -81,19 +105,21 @@ export class ProfilePage {
 
     const options: CameraOptions = {
       quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.PNG,
+      targetWidth: 1200,
+      targetHeight: 1200,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      correctOrientation: true,
       mediaType: this.camera.MediaType.PICTURE
     };
 
     this.camera.getPicture(options).then(
       imageData => {
-        this.picture = this.sanitizer.bypassSecurityTrustResourceUrl("data:image/jpeg;base64," + imageData);
+        this.picture = "data:image/jpeg;base64," + imageData;
         this.cameraOn = false;
       },
       err => {
-        alert('Ops, deu problema no camera')
-        console.log(err)
+        this.cameraOn = false
       }
     );
   }
@@ -103,18 +129,40 @@ export class ProfilePage {
 
     const options: CameraOptions = {
       quality: 100,
+      targetWidth: 1200,
+      targetHeight: 1200,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.PNG,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      correctOrientation: true,
       mediaType: this.camera.MediaType.PICTURE
     };
 
     this.camera.getPicture(options).then(
       imageData => {
-        this.picture = "data:image/png;base64," + imageData;
+        this.picture = "data:image/jpeg;base64," + imageData;
         this.cameraOn = false;
       },
-      err => {}
+      err => {
+        this.cameraOn = false
+      }
     );
+  }
+
+  sendPicture(){
+    let loader = this.presentLoading()
+    this.clienteService.uploadPicture(this.picture)
+      .subscribe(res => {
+        this.picture = null;
+        this.getImageIfExists()
+        loader.dismiss()
+        this.showAlert()
+      },error => {
+        loader.dismiss()
+      })
+  }
+
+  cancel(){
+    this.picture = null
   }
 }

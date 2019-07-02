@@ -33,8 +33,8 @@ export class ProdutoService {
     uploadPicture(picture, produto_id: string) {
         let pictureBlob = this.imageUtilService.dataUriToBlob(picture);
         let formData : FormData = new FormData();
-        formData.set('file', pictureBlob, 'file.png');
-        return this.http.post(
+        formData.set('file', pictureBlob, 'file.jpg');
+        return this.http.put(
             `${environment.BASE_URL}/produtos/picture/${produto_id}`, 
             formData,
             { 

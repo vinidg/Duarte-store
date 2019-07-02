@@ -1,3 +1,9 @@
 page-produtos-detalhes {
+  ion-content {
+    contain: size style;
+  }
 
+  .icone-editar{
+    padding-right: 5px
+  }
 }
