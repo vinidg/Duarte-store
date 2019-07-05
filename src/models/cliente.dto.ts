@@ -4,8 +4,7 @@ export interface ClienteDTO{
     cpf: string
     rg: string
     dataNascimento: string
-    pass: string
-    user: string
+    email: string
     imageUrl?: string
     perfis?: string[]
 }

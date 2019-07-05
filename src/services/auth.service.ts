@@ -5,13 +5,16 @@ import { LocalUser } from "../models/local_user";
 import { StorageService } from "./storage.service";
 import { JwtHelper } from "angular2-jwt";
 import { environment } from "../environments/environment";
+import { CarrinhoService } from "./domain/carrinho.service";
 
 @Injectable()
 export class AuthService{
 
     jwtHelper: JwtHelper = new JwtHelper();
 
-    constructor(public http: HttpClient,public storage:StorageService){
+    constructor(public http: HttpClient, 
+        public carrinhoService: CarrinhoService,
+        public storage: StorageService){
     }
     authenticate(creds: CredenciaisDTO){
         return this.http.post(
@@ -37,9 +40,10 @@ export class AuthService{
         let tok = authorizationValue.substring(7);
         let user : LocalUser = {
             token: tok,
-            user: this.jwtHelper.decodeToken(tok).sub
+            email: this.jwtHelper.decodeToken(tok).sub
         };
-        this.storage.setLocalUser(user);
+        this.storage.setLocalUser(user)
+        this.carrinhoService.criarCarrinhoApagar()
     }
 
     logout(){

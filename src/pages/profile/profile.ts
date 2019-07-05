@@ -55,8 +55,8 @@ export class ProfilePage {
   loadData(){
     let loader = this.presentLoading()
     let localUser = this.storage.getLocalUser();
-    if (localUser && localUser.user) {
-      this.clienteService.findByUser(localUser.user).subscribe(
+    if (localUser && localUser.email) {
+      this.clienteService.findByEmail(localUser.email).subscribe(
         res => {
           this.cliente = res as ClienteDTO
           this.getImageIfExists()

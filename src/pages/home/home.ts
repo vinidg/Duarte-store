@@ -12,7 +12,7 @@ import { AuthService } from '../../services/auth.service';
 export class HomePage {
   
 creds : CredenciaisDTO = {
-  user: "",
+  email: "",
   pass: ""
 };
 
@@ -33,12 +33,16 @@ creds : CredenciaisDTO = {
   } 
 
   ionViewDidEnter(){
+    let loader = this.presentLoading();
     this.auth.refreshToken()
     .subscribe(response =>{
       this.auth.successfulLogin(response.headers.get('Authorization'));
+      loader.dismiss(); 
       this.navCtrl.setRoot('CategoriasPage');
     },
-    error=>{});
+    error=>{
+      loader.dismiss(); 
+    });
   }
 
   login(){

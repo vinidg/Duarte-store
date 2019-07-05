@@ -34,8 +34,7 @@ export class StorageService {
     }
     
     setLocalCart(obj : Carrinho)  {
-        console.log("OBJTO"+JSON.stringify(obj))
-        if(obj==null){
+        if(obj == null){
             localStorage.removeItem(STORAGE_KEYS.carrinho);
         }else{
             localStorage.setItem(STORAGE_KEYS.carrinho, JSON.stringify(obj));

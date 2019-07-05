@@ -44,7 +44,7 @@ export class ProdutosDetalhesPage {
     this.loadData()
 
     let perfil : string[]
-    this.clienteService.findByUser(this.storage.getLocalUser().user)
+    this.clienteService.findByEmail(this.storage.getLocalUser().email)
       .subscribe(res => {
         perfil = res.perfis
         if(perfil.indexOf("ADMIN") > -1){
@@ -74,7 +74,7 @@ export class ProdutosDetalhesPage {
 
   loadData() {
     let loader = this.presentLoading()
-    let produto_id
+    let produto_id: string
     if(this.navParams.get('produto_id')){
       produto_id = this.navParams.get('produto_id')
     }else {
@@ -96,9 +96,14 @@ export class ProdutosDetalhesPage {
   getImageUrlIfExists() {
     this.produtoService.getImageFromBucket(this.item.id)
       .subscribe(response => {
-        this.pictureProduto = `${API_CONFIG.bucketBaseUrl}/produtos/pr${this.item.id}.jpg`;
+        this.item.imageUrl = `${API_CONFIG.bucketBaseUrl}/produtos/pr${this.item.id}.jpg`;
+        this.blobToDataURL(response).then(dataUrl => {
+          let str : string = dataUrl as string;
+          this.pictureProduto = this.sanitizer.bypassSecurityTrustUrl(str);
+        });
       },
       error => {
+        this.item.imageUrl = 'assets/imgs/prod.jpg'
         this.pictureProduto = 'assets/imgs/prod.jpg'
       });
   }
@@ -106,20 +111,6 @@ export class ProdutosDetalhesPage {
   addToCart(produto: ProdutoDTO) {
     this.carrinhoService.addProduto(produto)
     this.navCtrl.setRoot('CarrinhoPage');
-  }
-
-  async getImageIfExists(){
-    await this.produtoService.getImageFromBucket(this.item.id)
-        .subscribe(res => {
-          this.item.imageUrl = `${API_CONFIG.bucketBaseUrl}/produtos/pr${this.item.id}.jpg`
-          this.blobToDataURL(res).then(dataUrl => {
-            let str : string = dataUrl as string;
-            this.pictureProduto = this.sanitizer.bypassSecurityTrustUrl(str);
-          });
-        },
-        error => {
-          this.pictureProduto = 'assets/imgs/prod.jpg'
-        })
   }
 
   // https://gist.github.com/frumbert/3bf7a68ffa2ba59061bdcfc016add9ee
@@ -188,7 +179,7 @@ export class ProdutosDetalhesPage {
     this.produtoService.uploadPicture(this.picture, this.item.id)
       .subscribe(res => {
         this.picture = null;
-        this.getImageIfExists()
+        this.getImageUrlIfExists()
         loader.dismiss()
         this.showAlert()
       },error => {

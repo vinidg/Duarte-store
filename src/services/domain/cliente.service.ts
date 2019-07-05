@@ -15,8 +15,8 @@ export class ClienteService{
         public imageUtilService : ImageUtilService){
     }
 
-    findByUser(user: string) : Observable<ClienteDTO>{
-        return this.http.get<ClienteDTO>(`${environment.BASE_URL}/clientes/findbyuser?value=${user}`);
+    findByEmail(email: string) : Observable<ClienteDTO>{
+        return this.http.get<ClienteDTO>(`${environment.BASE_URL}/clientes/findbyemail?value=${email}`);
     }
 
     findAll() : Observable<ClienteDTO[]>{
@@ -48,7 +48,7 @@ export class ClienteService{
         `${environment.BASE_URL}/clientes/picture`, 
         formData,
         { 
-            observe: 'response', 
+            observe: 'response',    
             responseType: 'text'
         }
     ); 

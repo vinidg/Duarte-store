@@ -3,4 +3,5 @@ export interface ItemPedidos {
     nome: string
     quantidade: number
     preco: number
+    imgUrl?: string
 }

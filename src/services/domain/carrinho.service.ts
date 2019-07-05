@@ -4,15 +4,15 @@ import { Carrinho } from "../../models/carrinho";
 import { ProdutoDTO } from "../../models/produto.dto";
 import { ClienteService } from "./cliente.service";
 import { ItemPedidos } from "../../models/item.pedido.dto";
-import { ClienteDTO } from "../../models/cliente.dto";
 
 @Injectable()
 export class CarrinhoService {
     constructor(public store: StorageService,
-        public clienteService: ClienteService){
+        public clienteService: ClienteService
+        ){
     }
 
-    criarCarrinhoApagar(): Carrinho{
+    criarCarrinhoApagar(): Carrinho {
         let cart: Carrinho = { 
             cliente: null,
             endereco: null,
@@ -30,36 +30,56 @@ export class CarrinhoService {
         return cart
     }
 
-    addProduto(produto: ProdutoDTO){
+    addProduto(produto: ProdutoDTO): Carrinho {
         let cart = this.getCart()
-        if(!cart.cliente){
-            this.clienteService.findByUser(this.store.getLocalUser().user).subscribe(
-                res => {
-                    cart.cliente = res as ClienteDTO
-                },
-                error => {
-                    console.log("ERRO> "+error)
-                }
-            );
+        let index = cart.itemPedidos.findIndex(x=> x.produtoId == produto.id)
+        if(index > -1){
+            cart.itemPedidos[index].quantidade++
+        }else{
+            let itemPedido: ItemPedidos = {
+                produtoId: produto.id,
+                nome: produto.nome,
+                quantidade: 1,
+                preco: produto.preco,
+                imgUrl: produto.imageUrl
+            }
+            cart.itemPedidos.push(itemPedido)
         }
         this.store.setLocalCart(cart)
-        for(var i=0; i<cart.itemPedidos.length;i++){
-            console.log("passou no for do for")
-            if(cart.itemPedidos[i].produtoId === produto.id){
-                console.log("passou no if do for")
-                cart.itemPedidos[i].quantidade++
+        return cart
+    }
+
+    decreaseQuantity(produtoId: string): Carrinho {
+        let cart = this.getCart()
+        let index = cart.itemPedidos.findIndex(x => x.produtoId == produtoId)
+        if(index > -1){
+            cart.itemPedidos[index].quantidade--
+            if(cart.itemPedidos[index].quantidade < 1){
+                cart = this.removeItem(produtoId)
             }
-            else{
-                console.log("passou no else do for")
-                let itemPedido: ItemPedidos = {
-                    produtoId: produto.id,
-                    nome: produto.nome,
-                    quantidade: 1,
-                    preco: produto.preco
-                }
-                cart.itemPedidos.push(itemPedido)
-            }
+            this.store.setLocalCart(cart)
         }
+        return cart
+    }
+
+    increaseQuantity(produtoId: string): Carrinho {
+        let cart = this.getCart()
+        let index = cart.itemPedidos.findIndex(x => x.produtoId == produtoId)
+        if(index > -1){
+            cart.itemPedidos[index].quantidade++
+            this.store.setLocalCart(cart)
+        }
+        return cart
+    }
+
+    removeItem(produtoId: string): Carrinho {
+        let cart = this.getCart()
+        let index = cart.itemPedidos.findIndex(x => x.produtoId == produtoId)
+        if(index != -1){
+            cart.itemPedidos.splice(index, 1)
+        }
+        this.store.setLocalCart(cart)
+        return cart
     }
 
     total(){

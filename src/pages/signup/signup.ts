@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CidadeService } from '../../services/domain/cidade.service';
 import { EstadoService } from '../../services/domain/estado.service';
@@ -24,16 +24,17 @@ export class SignupPage {
     public cidadesService: CidadeService,
     public estadosService: EstadoService,
     public clienteService: ClienteService,
-    public alertCtrl : AlertController) {
+    public alertCtrl : AlertController,
+    public loadingCtrl: LoadingController) {
 
     this.formGroup = this.formBuilder.group({
       nome: ['',[Validators.required,Validators.minLength(5),Validators.maxLength(120)]],
-      user: ['',[Validators.required, Validators.minLength(5)]],
+      email: ['',[Validators.required, Validators.minLength(5), Validators.email]],
       pass: ['',[Validators.required]],
-      tipo: ['',[]],
+      tipo: ['',[Validators.required]],
       cpf: ['',[Validators.required]],
-      estadoId: [null,[]],
-      cidadeId: [null,[]],
+      estadoId: [null,[Validators.required]],
+      cidadeId: [null,[Validators.required]],
 
     });
   }
@@ -47,6 +48,15 @@ export class SignupPage {
       },
       error=>{});
   }
+
+  presentLoading() {
+    let loader = this.loadingCtrl.create({
+      content: "Aguarde..."
+    });
+    loader.present();
+    return loader;
+  }
+
   updateCidades(){
     let estado_id = this.formGroup.value.estadoId;
     this.cidadesService.findAll(estado_id)
@@ -56,12 +66,18 @@ export class SignupPage {
       },
       error=>{});
   }
+  
   signupUser(){
+    let loader = this.presentLoading()
     this.clienteService.insert(this.formGroup.value)
-      .subscribe(res =>
+      .subscribe(res =>{
+        loader.dismiss()
         this.showInsertOK()
-        ,error =>{}
-        );
+      
+      },error =>{
+          loader.dismiss()
+        }
+      );
   }
 
   showInsertOK(){
