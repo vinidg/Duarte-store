@@ -27,10 +27,13 @@
       <h2>{{item.nome}}</h2>
       <p>{{item.preco | currency}}</p>
     </button>
+    <ion-item *ngIf="showItems">
+      <h3 text-center>Ainda não existe produtos para essa categoria </h3>
+    </ion-item>
   </ion-list>
 
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>  
-  
+
 </ion-content>
