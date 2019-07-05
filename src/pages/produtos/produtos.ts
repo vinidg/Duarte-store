@@ -12,6 +12,7 @@ import { API_CONFIG } from '../../config/api.config';
 export class ProdutosPage {
 
   items : ProdutoDTO[] = [];
+  page: number = 0
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
@@ -25,23 +26,27 @@ export class ProdutosPage {
   
   loadData() {
     let loader = this.presentLoading()
-
-    this.produtosService.findAll()
+    let categoria_id = this.navParams.get('categoria_id')
+    this.produtosService.findByCategorias(categoria_id == null ? "" : categoria_id, this.page, 10)
       .subscribe(res => {
-        this.items = this.items.concat(res)
-        this.loadImagesUrls()
+        this.items = this.items.concat(res['content'])
+        let itemsPicture: ProdutoDTO[] = res['content']
         loader.dismiss()
+        this.loadImagesUrls(itemsPicture)
       },
       error => {
         loader.dismiss()
       })
   }
 
-  loadImagesUrls() {
-    for(let item of this.items){ 
-      this.produtosService.getSmallImageFromBucket(item.id)
+  loadImagesUrls(itemsPicture: ProdutoDTO[]) {
+    for(var i=0; i < itemsPicture.length; i++){
+      let item = this.items[i];
+      this.produtosService.getSmallImageFromBucket(itemsPicture[i].id)
         .subscribe(res => {
-          item.imageUrl = `${API_CONFIG.bucketBaseUrl}/produtos/pr${item.id}-small.jpg`
+          console.log("LISTA "+itemsPicture[i])
+          console.log("IMAGEM "+this.items[i].imageUrl)
+          item.imageUrl = `${API_CONFIG.bucketBaseUrl}/produtos/pr${itemsPicture[i].id}-small.jpg`
         },
         error => {
           item.imageUrl = 'assets/imgs/prod.jpg'
@@ -66,6 +71,14 @@ export class ProdutosPage {
     this.loadData();
     setTimeout(() => {
       refresher.complete();
+    }, 1000);
+  }
+
+  doInfinite(infiniteScroll) {
+    this.page++;
+    this.loadData();
+    setTimeout(() => {
+      infiniteScroll.complete();
     }, 1000);
   }
   
