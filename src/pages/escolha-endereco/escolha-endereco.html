@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Selecione o endereço de entrega</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header ion-item class="card">
+      <h2 item-start>{{enderecoEntrega?.nome}}</h2>
+        <ion-chip item-end>
+          <ion-label>Endereço para entrega</ion-label>
+          <ion-icon name="pin"></ion-icon>
+          </ion-chip>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{enderecoEntrega?.logradouro}}, {{enderecoEntrega?.numero}} - {{enderecoEntrega?.complemento}}</p>
+      <p>{{enderecoEntrega?.bairro}}, {{enderecoEntrega?.cidade}} - {{enderecoEntrega?.estado}}</p>
+      <p>{{enderecoEntrega?.cep}}</p>
+    </ion-card-content>
+  </ion-card>
+  <ion-list>
+    <ion-card *ngFor="let endereco of enderecos">
+        <ion-card-header ion-item button (click)="transicao()">
+            <h2>{{endereco?.nome}}</h2>
+            <ion-icon [name]="icone" item-end color="primary"></ion-icon>
+        </ion-card-header>
+        <ion-card-content [style.display]="classe" ion-item>
+            <p>{{endereco?.logradouro}}, {{endereco?.numero}} - {{endereco?.complemento}}</p>
+            <p>{{endereco?.bairro}}, {{endereco?.cidade}} - {{endereco?.estado}}</p>
+            <p>{{endereco?.cep}}</p>
+            <button ion-button item-start small outline (click) = "selecionarEndereco(endereco)">Usar endereço</button>
+        </ion-card-content>
+      
+      </ion-card>
+    </ion-list>
+    <button ion-button color="secondary" block (click)="formaPagamento()">Forma de pagamento</button>
+</ion-content>

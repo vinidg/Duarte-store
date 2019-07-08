@@ -1,5 +1,6 @@
 export interface EnderecoDTO {
-    id: string
+	id: string
+	nome: string
     logradouro: string
 	numero: string
 	complemento: string
@@ -7,4 +8,5 @@ export interface EnderecoDTO {
     cep: string
 	cidade: string
 	estado: string
+	principal: boolean
 }

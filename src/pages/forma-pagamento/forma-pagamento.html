@@ -1,0 +1,26 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Selecione a forma de pagamento</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content padding>
+    <form [formGroup]="formGroup" (ngSubmit)="concluir(); $event.preventDefault()">
+    <ion-list radio-group formControlName="pagamento">
+        <ion-item>
+          <ion-icon name="document" item-start></ion-icon>
+          <ion-label>Boleto</ion-label>
+          <ion-radio value="boleto"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="card" item-start></ion-icon>
+          <ion-label>Cartão de crédito</ion-label>
+          <ion-radio value="cartao"></ion-radio>
+        </ion-item>
+      </ion-list>
+      <button ion-button color="secondary" block type="submit" [disabled]="formGroup.invalid">Concluir pedido</button>
+      </form>
+</ion-content>

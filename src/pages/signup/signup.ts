@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CidadeService } from '../../services/domain/cidade.service';
-import { EstadoService } from '../../services/domain/estado.service';
 import { EstadoDTO } from '../../models/estado.dto';
 import { CidadeDTO } from '../../models/cidade.dto';
 import { ClienteService } from '../../services/domain/cliente.service';
+import { EnderecoService } from '../../services/domain/endereco.service';
 
 @IonicPage()
 @Component({
@@ -21,9 +20,8 @@ export class SignupPage {
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     public formBuilder: FormBuilder,
-    public cidadesService: CidadeService,
-    public estadosService: EstadoService,
     public clienteService: ClienteService,
+    public enderecoService: EnderecoService,
     public alertCtrl : AlertController,
     public loadingCtrl: LoadingController) {
 
@@ -40,7 +38,7 @@ export class SignupPage {
   }
 
   ionViewDidLoad(){
-    this.estadosService.findAll()
+    this.enderecoService.findAllEstados()
       .subscribe(res =>{
         this.estados = res;
         this.formGroup.controls.estadoId.setValue(this.estados[0].id);
@@ -59,7 +57,7 @@ export class SignupPage {
 
   updateCidades(){
     let estado_id = this.formGroup.value.estadoId;
-    this.cidadesService.findAll(estado_id)
+    this.enderecoService.findAllCidades(estado_id)
       .subscribe(res =>{
         this.cidades = res;
         this.formGroup.controls.cidadeId.setValue(null);

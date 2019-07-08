@@ -7,6 +7,7 @@ import { ClienteDTO } from '../../models/cliente.dto';
 import { StorageService } from '../../services/storage.service';
 import { API_CONFIG } from '../../config/api.config';
 import { ProdutoService } from '../../services/domain/produto.service';
+import { Carrinho } from '../../models/carrinho';
 
 @IonicPage()
 @Component({
@@ -42,18 +43,28 @@ export class CarrinhoPage {
   
   async checkout() {
     let cart = this.carrinhoService.getCart()
-    if(cart.cliente == null){
-      await this.clienteService.findByEmail(this.store.getLocalUser().email).subscribe(
-        res => {
-          cart.cliente = res as ClienteDTO
-          this.store.setLocalCart(cart)
+    await this.saveClienteStorage(cart)
+    this.navCtrl.push('EscolhaEnderecoPage')
+  }
+  
+  async saveClienteStorage(cart: Carrinho){
+    return new Promise(resolve => {
+        if(cart.cliente == null){
+          this.clienteService.findByEmail(this.store.getLocalUser().email).subscribe(
+            res => {
+              cart.cliente = res as ClienteDTO
+              this.store.setLocalCart(cart)
+              resolve()
             },
             error => {
               console.log("Erro capturar o perfil do cliente "+error)
             }
-            );
-    }
-    this.navCtrl.push('EnderecosPage')
+          );
+        }
+        else
+          resolve()
+    })
+   
   }
 
   loadImagesUrls() {
