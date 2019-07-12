@@ -29,7 +29,18 @@
         <p>{{ pedido?.endereco?.cep }}</p>
         </ion-card-content>
     </ion-card>
+    <h5>Produtos:</h5>
+    <ion-card *ngFor="let produto of pedido?.itemPedidos">
+        <ion-card-content>
+            <h6>{{ produto?.nome }} {{ produto?.quantidade }}x {{ produto?.preco | currency:"BRL" }}</h6>
+        </ion-card-content>
+    </ion-card>
+    <ion-item *ngIf="total() > 0">
+        <h5>Total</h5>
+        <h4 item-end>{{total() | currency:"BRL"  }}</h4>
+      </ion-item>
+      <h5>Status da entrega:</h5>
       <ion-list *ngFor="let entrega of pedido?.rastreios">
-       <p>{{ entrega?.status }} {{ entrega?.data | date:'dd/MM/yyyy hh:mm'}}</p>
+       <p>{{ entrega?.entrega }} {{ entrega?.data | date:'dd/MM/yyyy HH:mm'}}</p>
       </ion-list>
 </ion-content>
