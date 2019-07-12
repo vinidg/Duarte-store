@@ -6,6 +6,7 @@ import { ClienteService } from "../../services/domain/cliente.service";
 import { API_CONFIG } from "../../config/api.config";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Camera, CameraOptions } from "@ionic-native/camera";
+import { AuthService } from "../../services/auth.service";
 
 @IonicPage()
 @Component({
@@ -26,13 +27,23 @@ export class ProfilePage {
     public camera: Camera,
     public sanitizer: DomSanitizer,
     public alertCtrl: AlertController,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    public authService: AuthService
   ) {
     this.profileImage = 'assets/imgs/blank-avatar.png';
   }
 
   ionViewDidLoad() {
     this.loadData()
+  }
+
+  ionViewCanEnter() {
+    let auth = this.authService.isAuthenticated()
+    if(!auth){
+      this.authService.logout()
+      this.navCtrl.setRoot("HomePage")
+    }
+    
   }
 
   presentLoading() {

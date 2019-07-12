@@ -1,0 +1,41 @@
+page-pedidos {
+    @keyframes up-right {
+        0% {
+            transform: scale(1);
+            opacity: .25
+        }
+        50% {
+            transform: scale (1, 5);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1);
+            opacity: .25;
+        }
+    }
+
+    .dot {
+        height: 15px;
+        width: 15px;
+        background-color: rgb(253, 158, 158);
+        border-radius: 50%;
+        display: inline-block;
+        opacity: .25;
+      }
+
+      .red {
+        background-color: red;
+        top: 50%;
+        left: 50%;
+        -webkit-animation: up-right 3s infinite;
+        -moz-animation: up-right 3s infinite;
+        -o-animation: up-right 3s infinite;
+        animation: up-right 3s infinite;
+    }
+    
+    .green {
+        background-color: green;
+        top: 50%;
+        left: 50%;
+    }
+}

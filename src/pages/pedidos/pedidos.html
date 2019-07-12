@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Pedidos</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content padding>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-list>
+      <button ion-item *ngFor="let item of items" (click)="detalhes(item.id)">
+        <ion-row>
+          <ion-col>
+              <h1>#{{ item?.id.substr(0,8) }}</h1>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <h2>{{ item?.dataDaCompra | date:'dd/MM/yyyy hh:mm' }}</h2>
+          </ion-col>
+          <ion-col>
+            <h2 *ngIf="item.entregue"><span class="dot green" *ngIf="item.entregue"></span> Pedido entregue</h2>
+            <h2 *ngIf="!item.entregue"><span class="dot red" *ngIf="!item.entregue"></span> Pedido sendo enviado</h2>
+          </ion-col>
+        </ion-row>
+      </button>
+        <ion-item *ngIf="items?.length <= 0">
+            <h3 text-center>Sem pedidos</h3>
+          </ion-item>
+      </ion-list>
+</ion-content>

@@ -9,6 +9,7 @@ import { StorageService } from '../../services/storage.service';
 import { ClienteService } from '../../services/domain/cliente.service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AuthService } from '../../services/auth.service';
 
 @IonicPage()
 @Component({
@@ -35,7 +36,8 @@ export class ProdutosDetalhesPage {
     public camera: Camera,
     public sanitizer: DomSanitizer,
     public alertCtrl: AlertController,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    public authService: AuthService
     ) {
       this.pictureProduto = 'assets/imgs/prod.jpg'
   }
@@ -53,6 +55,10 @@ export class ProdutosDetalhesPage {
       },error => {
       }
       )
+  }
+
+  ionViewCanEnter() {
+    return this.authService.isAuthenticated()
   }
 
   showAlert() {
@@ -110,7 +116,7 @@ export class ProdutosDetalhesPage {
 
   addToCart(produto: ProdutoDTO) {
     this.carrinhoService.addProduto(produto)
-    this.navCtrl.setRoot('CarrinhoPage');
+    this.navCtrl.setRoot("CarrinhoPage");
   }
 
   // https://gist.github.com/frumbert/3bf7a68ffa2ba59061bdcfc016add9ee

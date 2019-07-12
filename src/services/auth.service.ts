@@ -12,10 +12,13 @@ export class AuthService{
 
     jwtHelper: JwtHelper = new JwtHelper();
 
-    constructor(public http: HttpClient, 
+    constructor(
+        public http: HttpClient, 
         public carrinhoService: CarrinhoService,
-        public storage: StorageService){
+        public storage: StorageService
+        ){
     }
+    
     authenticate(creds: CredenciaisDTO){
         return this.http.post(
         `${environment.BASE_URL}/login`,
@@ -24,6 +27,16 @@ export class AuthService{
             observe:'response',
             responseType: 'text'
         });
+    }
+
+    isAuthenticated(): boolean {
+        let user = this.storage.getLocalUser()
+        if(user == null){
+            this.carrinhoService.criarCarrinhoApagar()
+            return false
+        }else{
+            return true
+        }
     }
 
     refreshToken(){

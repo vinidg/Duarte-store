@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PagamentoService } from '../../services/domain/pagamento.service';
 import { CarrinhoService } from '../../services/domain/carrinho.service';
+import { AuthService } from '../../services/auth.service';
+import { PedidoService } from '../../services/domain/pedido.service';
 
 @IonicPage()
 @Component({
@@ -19,33 +20,43 @@ export class FormaPagamentoPage {
     public formBuilder: FormBuilder,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
-    public pagamentoService: PagamentoService,
-    public carrinhoService: CarrinhoService) {
+    public pedidoService: PedidoService,
+    public carrinhoService: CarrinhoService,
+    public authService: AuthService
+    ) {
       
       this.formGroup = this.formBuilder.group({
         pagamento: ['',[Validators.required]]
-  
       });
+  }
+  ionViewCanEnter() {
+    return this.authService.isAuthenticated()
   }
   presentLoading() {
     let loader = this.loadingCtrl.create({
       content: "Aguarde..."
     });
+
     loader.present();
-    return loader;
+    
+    setTimeout(() => {
+      this.showInsertOK()
+      this.navCtrl.setRoot("PedidosPage")
+    }, 3000);
+
+    setTimeout(() => {
+      loader.dismiss();
+    }, 8000);
+
   }
 
-
   concluir(){
-    let loader = this.presentLoading()
     let carrinho = this.carrinhoService.getCart()
-    this.pagamentoService.insert(carrinho)
-      .subscribe(res =>{
-        loader.dismiss()
-        this.showInsertOK()
-        this.navCtrl.setRoot('PedidosPage')
+    this.pedidoService.insert(carrinho)
+    .subscribe(res =>{
+      this.presentLoading()
+      this.carrinhoService.criarCarrinhoApagar()
       },error =>{
-          loader.dismiss()
         }
       );
   }
@@ -59,7 +70,6 @@ export class FormaPagamentoPage {
         {
           text: 'OK',
           handler: () =>{
-            this.navCtrl.pop();
           }
         }
       ]

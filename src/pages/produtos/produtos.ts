@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { ProdutoDTO } from '../../models/produto.dto';
 import { ProdutoService } from '../../services/domain/produto.service';
 import { API_CONFIG } from '../../config/api.config';
+import { AuthService } from '../../services/auth.service';
 
 @IonicPage()
 @Component({
@@ -18,13 +19,18 @@ export class ProdutosPage {
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     public produtosService: ProdutoService,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    public authService: AuthService) {
   }
 
   ionViewDidLoad() {
     let loader = this.presentLoading()
     this.loadData()
     loader.dismiss()
+  }
+
+  ionViewCanEnter() {
+    return this.authService.isAuthenticated()
   }
   
   loadData() {
@@ -67,7 +73,10 @@ export class ProdutosPage {
   }
 
   showDetail(produto_id : string) {
-    this.navCtrl.push('ProdutosDetalhesPage', {produto_id: produto_id});
+    this.navCtrl.push("ProdutosDetalhesPage", {produto_id: produto_id})
+    .catch(res => {
+      this.navCtrl.setRoot("HomePage")
+    });
   }
 
   doRefresh(refresher) {

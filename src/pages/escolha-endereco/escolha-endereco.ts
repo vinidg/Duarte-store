@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { EnderecoDTO } from '../../models/endereco.dto';
 import { CarrinhoService } from '../../services/domain/carrinho.service';
 import { EnderecoService } from '../../services/domain/endereco.service';
+import { StorageService } from '../../services/storage.service';
+import { AuthService } from '../../services/auth.service';
 
 @IonicPage()
 @Component({
@@ -27,19 +29,25 @@ export class EscolhaEnderecoPage {
     public navParams: NavParams,
     public carrinhoService: CarrinhoService,
     public enderecoService: EnderecoService,
-    public events: Events) {
+    public events: Events,
+    public store: StorageService,
+    public authService: AuthService) {
   }
 
   ionViewDidLoad() {
     this.loadData()
+  }
+
+  ionViewCanEnter() {
+    return this.authService.isAuthenticated()
   }
   
   loadData(){
     let cliente_id = this.carrinhoService.getCart().cliente.id
     this.enderecoService.findEnderecosCliente(cliente_id)
     .subscribe(res => {
-      this.enderecos = res as EnderecoDTO[]
-      this.selectEnderecoPrincipal()
+        this.enderecos = res as EnderecoDTO[]
+        this.selectEnderecoPrincipal()
       },error =>{
       })
     }
@@ -68,7 +76,13 @@ export class EscolhaEnderecoPage {
   }
 
   formaPagamento(){
+    let carrinho = this.carrinhoService.getCart()
+    carrinho.endereco = this.enderecoEntrega
+    this.store.setLocalCart(carrinho)
     this.navCtrl.push("FormaPagamentoPage")
+      .catch(res => {
+        this.navCtrl.setRoot("HomePage")
+      })
   }
 
   transicao() {

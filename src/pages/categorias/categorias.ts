@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CategoriaService } from '../../services/domain/categoria.service';
 import { CategoriaDTO } from '../../models/categoria.dto';
+import { AuthService } from '../../services/auth.service';
 
 @IonicPage()
 @Component({
@@ -15,11 +16,21 @@ export class CategoriasPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public categoriaService: CategoriaService) {
+    public categoriaService: CategoriaService,
+    public authService: AuthService) {
   }
 
   ionViewDidLoad() {
     this.loadingData();
+  }
+
+  ionViewCanEnter() {
+    let auth = this.authService.isAuthenticated()
+    if(!auth){
+      this.authService.logout()
+      this.navCtrl.setRoot("HomePage")
+    }
+    
   }
 
   loadingData(){
@@ -32,7 +43,12 @@ export class CategoriasPage {
   }
 
   showProdutos(categoria_id: string){
-    this.navCtrl.push('ProdutosPage', {categoria_id: categoria_id});
+    this.navCtrl.push("ProdutosPage", {categoria_id: categoria_id})
+      .catch(res=>
+        {
+          this.navCtrl.setRoot("HomePage")
+        }
+      );
   }
 
   doRefresh(event) {

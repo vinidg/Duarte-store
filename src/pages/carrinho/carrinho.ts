@@ -8,6 +8,7 @@ import { StorageService } from '../../services/storage.service';
 import { API_CONFIG } from '../../config/api.config';
 import { ProdutoService } from '../../services/domain/produto.service';
 import { Carrinho } from '../../models/carrinho';
+import { AuthService } from '../../services/auth.service';
 
 @IonicPage()
 @Component({
@@ -23,7 +24,8 @@ export class CarrinhoPage {
     public carrinhoService: CarrinhoService,
     public clienteService: ClienteService,
     public store: StorageService,
-    public produtoService: ProdutoService) {
+    public produtoService: ProdutoService,
+    public authService: AuthService) {
   }
 
 
@@ -31,12 +33,19 @@ export class CarrinhoPage {
     this.loadData()
   }
 
+  ionViewCanEnter() {
+    let auth = this.authService.isAuthenticated()
+    if(!auth){
+      this.authService.logout()
+      this.navCtrl.setRoot("HomePage")
+    }
+    
+  }
+
   loadData() {
     this.items = this.carrinhoService.getCart().itemPedidos
   }
 
-  
-  
   goOn(){
     this.navCtrl.setRoot('CategoriasPage')
   }
@@ -44,7 +53,7 @@ export class CarrinhoPage {
   async checkout() {
     let cart = this.carrinhoService.getCart()
     await this.saveClienteStorage(cart)
-    this.navCtrl.push('EscolhaEnderecoPage')
+    this.navCtrl.push("EscolhaEnderecoPage")
   }
   
   async saveClienteStorage(cart: Carrinho){
