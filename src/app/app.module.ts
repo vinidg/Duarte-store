@@ -18,6 +18,7 @@ import { ImageUtilService } from '../services/image-util.service';
 import { CarrinhoService } from '../services/domain/carrinho.service';
 import { EnderecoService } from '../services/domain/endereco.service';
 import { PedidoService } from '../services/domain/pedido.service';
+import { OneSignal } from '@ionic-native/onesignal';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { PedidoService } from '../services/domain/pedido.service';
     ImageUtilService,
     CarrinhoService,
     EnderecoService,
-    PedidoService
+    PedidoService,
+    OneSignal
   ]
 })
 export class AppModule {}

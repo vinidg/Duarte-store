@@ -46,7 +46,7 @@ export class FormaPagamentoPage {
 
     setTimeout(() => {
       loader.dismiss();
-    }, 8000);
+    }, 6000);
 
   }
 

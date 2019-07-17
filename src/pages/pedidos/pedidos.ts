@@ -31,13 +31,17 @@ export class PedidosPage {
     this.loadData()
   }
 
+  ionViewDidEnter(){
+    this.loadData()
+  }
+
   ionViewCanEnter() {
     let auth = this.authService.isAuthenticated()
     if(!auth){
       this.authService.logout()
       this.navCtrl.setRoot("HomePage")
     }
-
+    this.loadData()
   }
 
   async loadData(){

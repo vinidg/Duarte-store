@@ -28,16 +28,20 @@ export class PedidoDetalhePage {
     this.pedidosService.findById(pedido)
       .subscribe(res => {
         this.pedido = res as PedidoDTO
-          for(let produto of res.itemPedidos){
-            this.produtoService.findById(produto.produtoId)
-              .subscribe(response=> {
-                let index = this.pedido.itemPedidos.findIndex(x => x.produtoId == response.id)
-                if(index != -1){
-                    this.pedido.itemPedidos[index].nome = response.nome
-                }
-              })
-          }
+          this.detalhesProdutos(this.pedido)
       })
+  }
+
+  detalhesProdutos(pedido: PedidoDTO){
+    for(let produto of pedido.itemPedidos){
+      this.produtoService.findById(produto.produtoId)
+        .subscribe(response=> {
+          let index = this.pedido.itemPedidos.findIndex(x => x.produtoId == response.id)
+          if(index != -1){
+              this.pedido.itemPedidos[index].nome = response.nome
+          }
+        })
+      }
   }
 
   total(){

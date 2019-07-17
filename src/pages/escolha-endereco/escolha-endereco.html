@@ -3,12 +3,12 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Selecione o endereço de entrega</ion-title>
+    <ion-title>Endereço de entrega</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-card>
+  <ion-card *ngIf="enderecoEntrega">
     <ion-card-header ion-item class="card">
       <h2 item-start>{{enderecoEntrega?.nome}}</h2>
         <ion-chip item-end>
@@ -35,6 +35,12 @@
             <button ion-button item-start small outline (click) = "selecionarEndereco(endereco)">Usar endereço</button>
         </ion-card-content>
       </ion-card>
+      <ion-card>
+        <ion-card-content ion-item *ngIf="!enderecoEntrega">
+          <h2>Não existe endereço cadastrado</h2>
+          <button ion-button color="dark" outline>Adicionar endereço</button>
+        </ion-card-content>
+      </ion-card>
     </ion-list>
-    <button ion-button color="secondary" block (click)="formaPagamento()">Forma de pagamento</button>
+    <button ion-button color="secondary" block (click)="formaPagamento()" [disabled]=!enderecoEntrega>Forma de pagamento</button>
 </ion-content>

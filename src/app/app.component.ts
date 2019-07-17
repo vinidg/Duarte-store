@@ -3,6 +3,7 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthService } from '../services/auth.service';
+import { OneSignal } from '@ionic-native/onesignal';
 
 @Component({
   templateUrl: 'app.html'
@@ -14,8 +15,12 @@ export class MyApp {
 
   pages: Array<{title: string, component: string}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-    public auth : AuthService) {
+  constructor(
+    public platform: Platform, 
+    public statusBar: StatusBar, 
+    public splashScreen: SplashScreen,
+    public auth : AuthService,
+    public oneSignal: OneSignal) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -34,6 +39,38 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      // OneSignal Code start:
+      // Enable to debug issues:
+      // window["plugins"].OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
+
+      // var notificationOpenedCallback = function(jsonData) {
+      //   console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+      //   if (jsonData.notification.payload.additionalData != null) {
+      //     console.log("Here we access addtional data");
+      //     if (jsonData.notification.payload.additionalData.openURL != null) {
+      //       console.log("Here we access the openURL sent in the notification data");
+      //     }
+      //   }
+      // };
+
+      // window["plugins"].OneSignal
+      //   .startInit("84620968-76d7-4501-83da-5eb3c2f2be95")
+      //   .handleNotificationOpened(notificationOpenedCallback)
+      //   .inFocusDisplaying(window["plugins"].OneSignal.OSInFocusDisplayOption.Notification)
+      //   .endInit();
+      this.oneSignal.startInit('84620968-76d7-4501-83da-5eb3c2f2be95');
+      this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+      this.oneSignal.handleNotificationOpened().subscribe((obj) => {
+        let data = obj.notification.payload.additionalData
+        if(data != null){
+          this.nav.setRoot(data.page)
+          .catch(res => {
+            this.nav.setRoot("HomePage")
+          });
+        }
+      });
+      this.oneSignal.endInit();
     });
   }
 

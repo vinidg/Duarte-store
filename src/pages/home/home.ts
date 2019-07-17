@@ -3,6 +3,8 @@ import { NavController, IonicPage, LoadingController } from 'ionic-angular';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
 import { AuthService } from '../../services/auth.service';
+import { ClienteService } from '../../services/domain/cliente.service';
+import { OneSignal } from '@ionic-native/onesignal';
 
 @IonicPage()
 @Component({
@@ -13,15 +15,18 @@ export class HomePage {
   
 creds : CredenciaisDTO = {
   email: "",
-  pass: ""
+  pass: "",
 };
+
+playerID: string = null
 
   constructor(
     public navCtrl: NavController, 
     public menu: MenuController,
     public auth: AuthService,
-    public loadingCtrl: LoadingController
-    ) {
+    public loadingCtrl: LoadingController,
+    public clienteService: ClienteService,
+    public oneSignal: OneSignal) {
   }
 
   ionViewWillEnter() {
@@ -33,6 +38,9 @@ creds : CredenciaisDTO = {
   } 
 
   ionViewDidEnter(){
+    this.oneSignal.getIds().then(obj => {
+      this.playerID = obj.userId
+    });
     let loader = this.presentLoading();
     this.auth.refreshToken()
     .subscribe(response =>{
@@ -47,10 +55,12 @@ creds : CredenciaisDTO = {
 
   login(){
     let loader = this.presentLoading();
-
     this.auth.authenticate(this.creds)
     .subscribe(response =>{
       this.auth.successfulLogin(response.headers.get('Authorization'));
+      if(this.playerID != null){
+        this.clienteService.savePlayerId(this.playerID).subscribe()
+      }
       loader.dismiss();
       this.navCtrl.setRoot('CategoriasPage');
     },

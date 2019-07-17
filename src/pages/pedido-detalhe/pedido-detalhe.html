@@ -15,7 +15,7 @@
       </ion-row>
       <ion-row>
         <ion-col><h5>Data da compra:</h5></ion-col>
-        <ion-col><h5>{{ pedido?.dataDaCompra | date:'dd/MM/yyyy hh:mm' }}</h5></ion-col>
+        <ion-col><h5>{{ pedido?.dataDaCompra | date:'dd/MM/yyyy HH:mm' }}</h5></ion-col>
       </ion-row>
       <ion-row>
         <ion-col><h5>Endereço de entrega:</h5></ion-col>
@@ -41,6 +41,6 @@
       </ion-item>
       <h5>Status da entrega:</h5>
       <ion-list *ngFor="let entrega of pedido?.rastreios">
-       <p>{{ entrega?.entrega }} {{ entrega?.data | date:'dd/MM/yyyy HH:mm'}}</p>
+       <p>{{ entrega?.entrega }} {{ entrega?.data | date:'dd/MM/yyyy HH:mm:ss'}}</p>
       </ion-list>
 </ion-content>
