@@ -1,5 +1,33 @@
 page-categorias {
-    ion-content {
-        contain: size style;
-      }
+  ion-content {
+      contain: size style;
+    }
+
+    ion-card {
+      position: relative;
+      text-align: center;
+    }
+  
+    .card-title {
+      position: absolute;
+      top: 30%;
+      font-size: 3.0em;
+      width: 100%;
+      font-weight: bold;
+      color: #ffffff;
+      text-shadow: 2px 2px #000000;
+    }
+  
+    .card-subtitle {
+      font-size: 2.0em;
+      position: absolute;
+      top: 60%;
+      width: 100%;
+      color: #ffffff;
+      text-shadow: 2px 2px #000000;
+    }
+
+    img {
+      transform: scale(1.5);
+    }
 }

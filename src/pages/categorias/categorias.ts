@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CategoriaService } from '../../services/domain/categoria.service';
 import { CategoriaDTO } from '../../models/categoria.dto';
 import { AuthService } from '../../services/auth.service';
+import { ProdutoService } from '../../services/domain/produto.service';
+import { ProdutoDTO } from '../../models/produto.dto';
 
 @IonicPage()
 @Component({
@@ -17,7 +19,8 @@ export class CategoriasPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     public categoriaService: CategoriaService,
-    public authService: AuthService) {
+    public authService: AuthService,
+    public produtoService: ProdutoService) {
   }
 
   ionViewDidLoad() {
@@ -37,9 +40,24 @@ export class CategoriasPage {
     this.categoriaService.findAll()
       .subscribe(response => {
         this.items = response;
+        this.loadingSizeProdutos()
       },
-      error => {});
+    error => {
+    });
+    
+  }
 
+  loadingSizeProdutos(){
+    for(let item of this.items){
+      this.produtoService.findByCategorias(item.id)
+      .subscribe(res => {
+        let itemsProdutos: ProdutoDTO[] = res['content']
+        item.quantidade = itemsProdutos.length
+        let index = this.items.findIndex(i => i.id == item.id)
+        this.items[index] = item
+      },
+      error=>{})
+    }
   }
 
   showProdutos(categoria_id: string){
@@ -50,19 +68,5 @@ export class CategoriasPage {
         }
       );
   }
-
-  doRefresh(event) {
-    this.loadingData();
-    setTimeout(() => {
-      event.complete();
-    }, 1000);
-  }
-
-  loadData(event){
-      setTimeout(() => {
-        event.complete();
-        
-      }, 1000);
-    }
 
 }

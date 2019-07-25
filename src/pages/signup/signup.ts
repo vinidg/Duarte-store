@@ -49,7 +49,7 @@ export class SignupPage {
 
   presentLoading() {
     let loader = this.loadingCtrl.create({
-      content: "Aguarde..."
+      spinner: 'crescent',
     });
     loader.present();
     return loader;

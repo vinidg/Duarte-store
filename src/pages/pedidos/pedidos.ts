@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { StorageService } from '../../services/storage.service';
 import { ClienteService } from '../../services/domain/cliente.service';
 import { PedidoDTO } from '../../models/pedido.dto';
@@ -15,7 +15,8 @@ import { PedidoService } from '../../services/domain/pedido.service';
 export class PedidosPage {
 
   cliente_id: string
-  items: PedidoDTO[]
+  items: PedidoDTO[] = []
+  semPedido: Boolean
 
   constructor(
     public navCtrl: NavController,
@@ -24,7 +25,8 @@ export class PedidosPage {
     public storageService: StorageService,
     public clienteService: ClienteService,
     public authService: AuthService,
-    public produtoService: ProdutoService) {
+    public produtoService: ProdutoService,
+    public loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
@@ -45,8 +47,10 @@ export class PedidosPage {
   }
 
   async loadData(){
+    let loader = this.presentLoading()
     await this.findIdByEmail()
     await this.findPedidosByCliente()
+    loader.dismiss()
   }
 
   findPedidosByCliente() {
@@ -54,6 +58,10 @@ export class PedidosPage {
       this.pedidoService.findByCliente(this.cliente_id)
         .subscribe(res => {
           this.items = res as PedidoDTO[]
+          if(this.items.length <= 0)
+            this.semPedido = true
+          else
+            this.semPedido = false
           resolve()
         },error => {})
     })
@@ -79,6 +87,14 @@ export class PedidosPage {
     setTimeout(() => {
       refresher.complete();
     }, 1000);
+  }
+
+  presentLoading() {
+    let loader = this.loadingCtrl.create({
+      spinner: 'crescent',
+    });
+    loader.present();
+    return loader;
   }
 
 }

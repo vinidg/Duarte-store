@@ -24,29 +24,30 @@ export class ProdutosPage {
   }
 
   ionViewDidLoad() {
-    let loader = this.presentLoading()
     this.loadData()
-    loader.dismiss()
   }
-
+  
   ionViewCanEnter() {
     return this.authService.isAuthenticated()
   }
   
   loadData() {
+    let loader = this.presentLoading()
     let categoria_id = this.navParams.get('categoria_id')
     this.produtosService.findByCategorias(categoria_id == null ? "" : categoria_id, this.page, 10)
-      .subscribe(res => {
-        this.items = this.items.concat(res['content'])
-        let itemsPicture: ProdutoDTO[] = res['content']
-        if(itemsPicture.length > 0){
-          this.showItems = false
-        }else{
-          this.showItems = true
-        }
-        this.loadImagesUrls(itemsPicture)
-      },
-      error => {
+    .subscribe(res => {
+      this.items = this.items.concat(res['content'])
+      let itemsPicture: ProdutoDTO[] = res['content']
+      if(itemsPicture.length > 0){
+        this.showItems = false
+      }else{
+        this.showItems = true
+      }
+      this.loadImagesUrls(itemsPicture)
+      loader.dismiss()
+    },
+    error => {
+      loader.dismiss()
       })
   }
 
@@ -55,18 +56,17 @@ export class ProdutosPage {
       let item = this.items[i]
       this.produtosService.getSmallImageFromBucket(item.id)
         .subscribe(res => {
-          console.log("LISTA "+itemsPicture[i])
           item.imageUrl = `${API_CONFIG.bucketBaseUrl}/produtos/pr${item.id}-small.jpg`
         },
         error => {
-          item.imageUrl = 'assets/imgs/prod.jpg'
+          item.imageUrl = 'assets/svg/loading.svg'
         })
     }
   }
 
   presentLoading() {
     let loader = this.loadingCtrl.create({
-      content: "Aguarde..."
+      spinner: 'crescent',
     });
     loader.present();
     return loader;

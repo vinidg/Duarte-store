@@ -19,6 +19,7 @@ import { CarrinhoService } from '../services/domain/carrinho.service';
 import { EnderecoService } from '../services/domain/endereco.service';
 import { PedidoService } from '../services/domain/pedido.service';
 import { OneSignal } from '@ionic-native/onesignal';
+import { HeaderColor } from '@ionic-native/header-color'
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { OneSignal } from '@ionic-native/onesignal';
     CarrinhoService,
     EnderecoService,
     PedidoService,
-    OneSignal
+    OneSignal,
+    HeaderColor
   ]
 })
 export class AppModule {}

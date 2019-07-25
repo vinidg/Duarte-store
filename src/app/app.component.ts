@@ -4,15 +4,16 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthService } from '../services/auth.service';
 import { OneSignal } from '@ionic-native/onesignal';
+import { HeaderColor } from '@ionic-native/header-color';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-
+  
   rootPage: string = 'HomePage';
-
+  
   pages: Array<{title: string, component: string}>;
 
   constructor(
@@ -20,7 +21,8 @@ export class MyApp {
     public statusBar: StatusBar, 
     public splashScreen: SplashScreen,
     public auth : AuthService,
-    public oneSignal: OneSignal) {
+    public oneSignal: OneSignal,
+    public headerColor: HeaderColor) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -30,35 +32,15 @@ export class MyApp {
       { title: 'Pedidos', component: 'PedidosPage' },
       { title: 'Logout', component: '' },
     ];
-
+    
   }
-
+  
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
+      this.statusBar.backgroundColorByHexString('#0099FF');
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
 
-      // OneSignal Code start:
-      // Enable to debug issues:
-      // window["plugins"].OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
-
-      // var notificationOpenedCallback = function(jsonData) {
-      //   console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
-      //   if (jsonData.notification.payload.additionalData != null) {
-      //     console.log("Here we access addtional data");
-      //     if (jsonData.notification.payload.additionalData.openURL != null) {
-      //       console.log("Here we access the openURL sent in the notification data");
-      //     }
-      //   }
-      // };
-
-      // window["plugins"].OneSignal
-      //   .startInit("84620968-76d7-4501-83da-5eb3c2f2be95")
-      //   .handleNotificationOpened(notificationOpenedCallback)
-      //   .inFocusDisplaying(window["plugins"].OneSignal.OSInFocusDisplayOption.Notification)
-      //   .endInit();
+      
       this.oneSignal.startInit('84620968-76d7-4501-83da-5eb3c2f2be95');
       this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
       this.oneSignal.handleNotificationOpened().subscribe((obj) => {
@@ -71,7 +53,11 @@ export class MyApp {
         }
       });
       this.oneSignal.endInit();
+      
     });
+    this.headerColor.tint("#0099FF")
+    
+    this.splashScreen.hide();
   }
 
   openPage(page : {title:string, component:string}) {

@@ -34,7 +34,7 @@ export class FormaPagamentoPage {
   }
   presentLoading() {
     let loader = this.loadingCtrl.create({
-      content: "Aguarde..."
+      spinner: 'crescent',
     });
 
     loader.present();

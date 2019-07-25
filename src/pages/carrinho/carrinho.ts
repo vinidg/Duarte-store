@@ -28,7 +28,6 @@ export class CarrinhoPage {
     public authService: AuthService) {
   }
 
-
   ionViewDidLoad() {
     this.loadData()
   }

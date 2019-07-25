@@ -39,7 +39,7 @@ export class ProdutosDetalhesPage {
     public loadingCtrl: LoadingController,
     public authService: AuthService
     ) {
-      this.pictureProduto = 'assets/imgs/prod.jpg'
+      this.pictureProduto = 'assets/svg/loading.svg'
   }
 
   ionViewDidLoad() {
@@ -72,7 +72,7 @@ export class ProdutosDetalhesPage {
 
   presentLoading() {
     let loader = this.loadingCtrl.create({
-      content: "Aguarde..."
+      spinner: 'crescent',
     });
     loader.present();
     return loader;
@@ -109,8 +109,8 @@ export class ProdutosDetalhesPage {
         });
       },
       error => {
-        this.item.imageUrl = 'assets/imgs/prod.jpg'
-        this.pictureProduto = 'assets/imgs/prod.jpg'
+        this.item.imageUrl = 'assets/svg/loading.svg'
+        this.pictureProduto = 'assets/svg/loading.svg'
       });
   }
 

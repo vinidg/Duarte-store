@@ -14,15 +14,13 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="showProdutos(item.id)">
-      <h2> {{item.nome}} </h2>
-    </button>
+      <ion-card button *ngFor="let item of items" (click)="showProdutos(item.id)">
+        <img src="assets/imgs/{{item.id || 0}}.jpg"/>
+        <div class="card-title">{{item.nome}}</div>
+        <div class="card-subtitle">{{item.quantidade}} Produtos</div>
+      </ion-card>
   </ion-list>
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-      <ion-infinite-scroll-content
-        loadingSpinner="bubbles"
-        loadingText="Loading more data...">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+  
 </ion-content>
