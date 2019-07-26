@@ -38,7 +38,7 @@ export class ProdutosPage {
     .subscribe(res => {
       this.items = this.items.concat(res['content'])
       let itemsPicture: ProdutoDTO[] = res['content']
-      if(itemsPicture.length > 0){
+      if(this.items.length > 0){
         this.showItems = false
       }else{
         this.showItems = true
@@ -78,7 +78,7 @@ export class ProdutosPage {
       this.navCtrl.setRoot("HomePage")
     });
   }
-
+  
   doRefresh(refresher) {
     this.items = [];
     this.loadData();

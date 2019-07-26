@@ -24,8 +24,8 @@
       <ion-thumbnail item-start>
         <img [src]="item.imageUrl || 'assets/svg/loading.svg'">
       </ion-thumbnail>
-      <h2>{{item.nome}}</h2>
-      <p>{{item.preco | currency}}</p>
+      <h2>{{ item.nome }}</h2>
+      <p>{{ item.preco | currency:"BRL" }}</p>
     </button>
     <ion-item *ngIf="showItems">
       <h3 text-center>Ainda não existe produtos para essa categoria </h3>
